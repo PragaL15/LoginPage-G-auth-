@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+// appLayout.jsx
+
+import React, { useState } from "react";
+import "./appLayout.css";
 import HorizontalNavbar from "../horizontalNavbar/horizontalNavbar";
 import VerticalNavbar from "../verticalNavbar/verticalNavbar";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Dashboard from "../../allPages/dashboard/Dashboard";
 import Nptel from "../../allPages/NPTEL/Nptel";
 import OneCredit from "../../allPages/oneCredit/OneCredit";
@@ -10,61 +13,70 @@ import Markentry from "../../allPages/MarkEntry/MarkEntry/markentry";
 import Login from "../../allPages/Login/login";
 import Logout from "../../Logout/logout";
 import MainForm from "../../allPages/form_entry/main_form";
-import "./appLayout.css";
 
 function AppLayout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const location = useLocation();
-
-  useEffect(() => {
-    const token = new URLSearchParams(location.search).get('token');
-    if (token) {
-      localStorage.setItem('authToken', token);
-      setIsAuthenticated(true);
-      window.history.replaceState({}, document.title, "/dashboard");
-    } else {
-      const storedToken = localStorage.getItem('authToken');
-      if (storedToken) {
-        setIsAuthenticated(true);
-      }
-    }
-  }, [location]);
 
   const toggleVerticalNavbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const closeVerticalNavbar = () => {
-    setIsMenuOpen(false);
+    setIsMenuOpen(false); 
   };
 
   return (
     <BrowserRouter>
-      {!isAuthenticated ? (
-        <Routes>
-          <Route path="/" element={<Login />} />
-        </Routes>
-      ) : (
-        <div className="total-app-layout">
-          <HorizontalNavbar toggleVerticalNavbar={toggleVerticalNavbar} />
-          <div className="v-nav-and-content">
-            <VerticalNavbar className={`v-navbar ${isMenuOpen ? "open" : ""}`} onClose={closeVerticalNavbar} />
-            <div className="content">
-              <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/nptel" element={<Nptel />} />
-                <Route path="/onecredit" element={<OneCredit />} />
-                <Route path="/facultymap" element={<Facultymap />} />
-                <Route path="/markentry" element={<Markentry />} />
-                <Route path="/logout" element={<Logout />} />
-                <Route path="/mainform" element={<MainForm />} />
-              </Routes>
-            </div>
+      <Routes>
+        <Route path="/" element={<LoginWrapper />} />
+        <Route path="/*" element={<MainLayout />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function LoginWrapper() {
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/";
+
+  return isLoginPage ? <Login /> : <MainLayout />;
+}
+
+function MainLayout() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleVerticalNavbar = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeVerticalNavbar = () => {
+    setIsMenuOpen(false); 
+  };
+
+  return (
+    <div>
+      <div className="h-navbar">
+        <HorizontalNavbar toggleVerticalNavbar={toggleVerticalNavbar} />
+      </div>
+      <div className="v-nav-and-content">
+        <div className={`v-navbar ${isMenuOpen ? "open" : ""}`}>
+          <VerticalNavbar onClose={closeVerticalNavbar} />
+        </div>
+        <div className="content">
+          <div className="content-with-margin">
+            <Routes>
+              <Route path="/nptel" element={<Nptel />} />
+              <Route path="/onecredit" element={<OneCredit />} />
+              <Route path="/facultymap" element={<Facultymap />} />
+              <Route path="/markentry" element={<Markentry />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/logout" element={<Logout />} />
+              <Route path="/mainform" element={<MainForm />} />
+            </Routes>
           </div>
         </div>
-      )}
-    </BrowserRouter>
+      </div>
+    </div>
   );
 }
 

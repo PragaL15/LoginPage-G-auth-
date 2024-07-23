@@ -26,12 +26,16 @@ function Login() {
       </div>
       <div className="login-section">
         <div className="login-card">
+          <img src="../../../public/student_logo.png" alt="Student Logo" className="fixed-size-image" />
           <h2>IQAC Portal</h2>
           {!token ? (
-            <button className="google-btn" onClick={googleAuth}>
-              <img src="google-logo.png" alt="Google Logo" className="google-logo" />
-              <span>Sign in with Google</span>
-            </button>
+            <>
+              <button className="google-btn" onClick={googleAuth}>
+                <img src="../../../public/image8-2.png" alt="Google Logo" className="google-logo" />
+                <span>Sign in with Google</span>
+              </button>
+              <div className='para'><p>Sign in using your BITsathy account</p></div>
+            </>
           ) : (
             <div>
               <p>You are logged in!</p>
