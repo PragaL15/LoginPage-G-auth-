@@ -62,25 +62,22 @@
 // app.listen(port, () => {
 //     console.log(`Server running on port ${port}`);
 // });
-
-
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const morgan = require("morgan");
-const bodyParser = require("body-parser");
 const session = require("express-session");
 const passport = require("passport");
-const authRoutes = require("./routes/auth/auth");
-const passportStrategy = require("./config/passport_config");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const authRoutes = require("./routes/auth/auth");
+const passportStrategy = require("./config/passport_config");
 
 dotenv.config();
 
 // Middleware for generating JWT token
 const generateToken = (user) => {
-    return jwt.sign({ user }, 'my_long_and_random_secret_key_here', { expiresIn: '30s' });
+    return jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '30s' });
 };
 
 // Middleware logger config
@@ -89,10 +86,10 @@ const morgan_config = morgan(":method :url :status :res[content-length] - :respo
 const app = express();
 const port = 3000;
 
-// Enable CORS AND LOGGER MIDDLEWARE
+// Enable CORS and logger middleware
 app.use(
     session({
-        secret: "my_screct_key_is_iqac",
+        secret: 'my_screct_key_is_iqac',
         resave: false,
         saveUninitialized: true,
         cookie: {
@@ -112,7 +109,6 @@ app.use(
 );
 
 app.use(morgan_config);
-app.use(bodyParser.json());
 app.use(express.json());
 
 // Example authentication route
@@ -132,16 +128,10 @@ app.post("/auth/login", (req, res) => {
     res.json({ token });
 });
 
-// app.use("/api/rf", regulation_frame_routes);
-// app.use("/api/cfm", course_faculty_mapping_routes);
+// Use auth routes
 app.use("/auth", authRoutes);
 
 // Start server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
-
-
-
-
-
