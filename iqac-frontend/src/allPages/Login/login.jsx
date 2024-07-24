@@ -30,9 +30,10 @@ function Login() {
           <h2>IQAC Portal</h2>
           {!token ? (
             <>
+           
               <button className="google-btn" onClick={googleAuth}>
                 <img src="../../../public/image8-2.png" alt="Google Logo" className="google-logo" />
-                <span>Sign in with Google</span>
+                <span className="text">Sign in with Google</span>
               </button>
               <div className='para'><p>Sign in using your BITsathy account</p></div>
             </>

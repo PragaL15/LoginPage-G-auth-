@@ -22,14 +22,14 @@ router.get("/google/callback",
       res.redirect(`http://localhost:5173/dashboard?token=${token}`);
     } else {
       // Handle case where user is not authenticated
-      res.redirect("/login");
+      res.redirect("/");
     }
   }
 );
 
 const generateToken = (user, expiresIn) => {
   const JWT_SECRET = process.env.JWT_SECRET || "my_long_and_random_secret_key_here";
-  return jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn });
+  return jwt.sign({ userId: user.id }, 'my_long_and_random_secret_key_here', { expiresIn });
 };
 
 module.exports = router;
