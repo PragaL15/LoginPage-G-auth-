@@ -7,3 +7,6 @@ google-auth-library: Google authentication library for Node.js.
 jsonwebtoken: Used to create and verify JSON Web Tokens (JWT).
 mysql2: MySQL client for Node.js with support for Promises.
 dotenv: Loads environment variables from a .env file.
+
+
+The npm command line to install all the packages: npm install express cookie-parser cors google-auth-library jsonwebtoken mysql2 dotenv
