@@ -1,0 +1,26 @@
+CREATE DATABASE iqac_ce;
+
+USE iqac_ce;
+
+CREATE TABLE master_students (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE user_roles_mapping (
+    user_id INT,
+    role_id INT,
+    PRIMARY KEY (user_id, role_id)
+);
+
+CREATE TABLE roles_resources_mapping (
+    role_id INT,
+    resource_id INT,
+    PRIMARY KEY (role_id, resource_id)
+);
+
+CREATE TABLE master_resources (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    resource_name VARCHAR(255),
+    path VARCHAR(255)
+);
