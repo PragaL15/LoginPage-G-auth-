@@ -10,3 +10,5 @@ dotenv: Loads environment variables from a .env file.
 
 
 The npm command line to install all the packages: npm install express cookie-parser cors google-auth-library jsonwebtoken mysql2 dotenv
+
+For running front-end: npm install vite
