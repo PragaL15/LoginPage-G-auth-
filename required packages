@@ -1,0 +1,9 @@
+The following npm packages are used in this project:
+
+express: Web framework for Node.js.
+cookie-parser: Middleware to parse cookies.
+cors: Middleware to enable Cross-Origin Resource Sharing.
+google-auth-library: Google authentication library for Node.js.
+jsonwebtoken: Used to create and verify JSON Web Tokens (JWT).
+mysql2: MySQL client for Node.js with support for Promises.
+dotenv: Loads environment variables from a .env file.
